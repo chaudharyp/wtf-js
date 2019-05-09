@@ -5,9 +5,16 @@ const app = express();
 
 app.use(express.static(__dirname + '/public'));
 
-app.get('/', function(req, res) {
-  res.send('Hello World!');
-});
+const commentsController = require("./controller/comments_controller");
+app.get('/getAllComments', commentsController.getAllComments);
+app.get('/getMultiplePosts', commentsController.fetchMultiplePosts);
+app.get('/fetchPostsAndComments', commentsController.fetchPostsAndComments);
+
+const UserController = require("./controller/userController");
+app.get('/createOrUpdateUser', commentsController.createOrUpdateUser);
+app.get('/activeUsers', commentsController.activeUsers);
+app.get('/getUserByUserId', commentsController.getUserByUserId);
+app.get('/getSeniorCitizenUsers', commentsController.getSeniorCitizenUsers);
 
 const rp = require("request-promise");
 

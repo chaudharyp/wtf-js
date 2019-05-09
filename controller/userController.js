@@ -2,21 +2,27 @@ const rp = require("request-promise"),
 	request = require("request"),
 	lodash = require("lodash");
 
+async function userCreaterOrUpdater(shouldCreateUser, userId, userToCreate) {
+		let user = "";
+		if (reqBody.shouldCreateUser) {
+			user = await rp("https://jsonplaceholder.typicode.com/users");
+		} else {
+			user = await rp("https://jsonplaceholder.typicode.com/users/" + userId);
+
+			user.isActive = reqBody.isActive;
+
+			user = await rp("https://jsonplaceholder.typicode.com/users/" + userId, userToCreate);
+		}
+
+		return user;
+}
+
 module.exports = {
 	async createOrUpdateUser(req, res) {
 		try {
 			const reqBody = req.body;
 
-			let user = "";
-			if (reqBody.shouldCreateUser) {
-				user = await rp("https://jsonplaceholder.typicode.com/users");
-			} else {
-				user = await rp("https://jsonplaceholder.typicode.com/users/" + reqBody.userId);
-
-				user.isActive = reqBody.isActive;
-
-				user = await rp("https://jsonplaceholder.typicode.com/users/" + reqBody.userId, user);
-			}
+			const user = await userCreaterOrUpdater(reqBody.shouldCreateUser, reqBody.userId, reqBody.user);
 
 			res.status(200).send({
 				user,
