@@ -18,11 +18,11 @@ app.get('/getSeniorCitizenUsers', commentsController.getSeniorCitizenUsers);
 
 const rp = require("request-promise");
 
-function checkIfJsonPlaceholderApiWorks() {
+function jsonPlaceholderApiWorks() {
 	const url = "https://jsonplaceholder.typicode.com";
 	const placeholderApiRes = rp(url);
 }
 
-setInterval(checkIfJsonPlaceholderApiWorks, 604800000);
+setInterval(jsonPlaceholderApiWorks, 604800000);
 
 app.listen(process.env.PORT || 5000);
